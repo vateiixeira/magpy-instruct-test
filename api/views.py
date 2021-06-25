@@ -1,10 +1,22 @@
-from rest_framework import generics, viewsets
+from django.http.response import Http404
+from rest_framework.response import Response
+from api.permissions import ProjectPermission
+from rest_framework import generics, status, viewsets
 
-from .models import Project
-from .serializers import ProjectSerializer
-
+from .models import Project,PackageRelease
+from .serializers import ProjectRetriveSerializer, ProjectSerializer,PackageSerializer
+from rest_framework.decorators import action
 
 class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = Project.objects.all()
+    permission_classes = [ProjectPermission]
     serializer_class = ProjectSerializer
-    lookup_field = "name"
+    lookup_field = 'name'
+
+    def get_queryset(self):
+        queryset = Project.objects.all()
+
+        return queryset
+        
+
+
+
