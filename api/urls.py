@@ -5,6 +5,7 @@ from drf_yasg import openapi
 from django.conf.urls import url
 from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
+from django.urls import re_path
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -20,7 +21,7 @@ router = DefaultRouter()
 router.register(r'projects', views.ProjectViewSet, basename='projects')
 
 urlpatterns = [
-    url(r'^swagger$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    re_path(r'^swagger$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
 
 urlpatterns += router.urls
